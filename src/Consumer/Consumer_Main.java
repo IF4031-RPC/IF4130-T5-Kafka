@@ -25,7 +25,7 @@ import kafka.message.MessageAndOffset;
  * @author akhfa
  */
 public class Consumer_Main extends  Thread{
-    final static String TOPIC = "test";
+    String TOPIC = "asdfgh";
     ConsumerConnector consumerConnector;
 
 
@@ -40,6 +40,15 @@ public class Consumer_Main extends  Thread{
         properties.put("group.id","test-group");
         ConsumerConfig consumerConfig = new ConsumerConfig(properties);
         consumerConnector = Consumer.createJavaConsumerConnector(consumerConfig);
+    }
+    
+    public Consumer_Main(String nick, String channel){
+        Properties properties = new Properties();
+        properties.put("zookeeper.connect","localhost:2181");
+        properties.put("group.id",nick);
+        ConsumerConfig consumerConfig = new ConsumerConfig(properties);
+        consumerConnector = Consumer.createJavaConsumerConnector(consumerConfig);
+        TOPIC = channel;
     }
 
     @Override
