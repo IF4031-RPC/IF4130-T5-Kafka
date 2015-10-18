@@ -45,8 +45,6 @@ public class Client {
                         {
                             nick = com[1];
                             
-                            consumer = new Consumer_Main(nick);
-                            
                             System.out.println("Your nickname is " + nick);
                             
                         };
@@ -87,11 +85,6 @@ public class Client {
                         nick = random;
                         
                         System.out.println("Your nickname is " + nick);
-
-                        listOfChannel.put(com[1], new Consumer_Main(nick, com[1]));
-                        listOfChannel.get(com[1]).start();
-                        System.out.println("You have successfully join " + com[1]);
-                        System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
                     }
                     
                 }

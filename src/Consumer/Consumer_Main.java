@@ -71,9 +71,11 @@ public class Consumer_Main extends  Thread{
         Map<String, List<KafkaStream<byte[], byte[]>>> consumerMap = consumerConnector.createMessageStreams(topicCountMap);
         KafkaStream<byte[], byte[]> stream =  consumerMap.get(TOPIC).get(0);
         ConsumerIterator<byte[], byte[]> it = stream.iterator();
-        while(it.hasNext())
+        while(it.hasNext()) {
+            System.out.println("");
             System.out.println(new String(it.next().message()));
-
+            System.out.println("Please enter your command: ");
+        }
     }
 
     private static void printMessages(ByteBufferMessageSet messageSet) throws UnsupportedEncodingException {
