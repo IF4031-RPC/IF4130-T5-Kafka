@@ -27,7 +27,7 @@ import kafka.message.MessageAndOffset;
 public class Consumer_Main extends  Thread{
     String TOPIC = "asdfgh";
     ConsumerConnector consumerConnector;
-
+    ConsumerConfig consumerConfig;
 
     public static void main(String[] argv) throws UnsupportedEncodingException {
         Consumer_Main helloKafkaConsumer = new Consumer_Main();
@@ -35,20 +35,33 @@ public class Consumer_Main extends  Thread{
     }
 
     public Consumer_Main(){
+//        Properties properties = new Properties();
+//        properties.put("zookeeper.connect","localhost:2181");
+//        properties.put("group.id","test-group");
+//        ConsumerConfig consumerConfig = new ConsumerConfig(properties);
+//        consumerConnector = Consumer.createJavaConsumerConnector(consumerConfig);
+    }
+    
+    public Consumer_Main(String nick){
         Properties properties = new Properties();
         properties.put("zookeeper.connect","localhost:2181");
-        properties.put("group.id","test-group");
-        ConsumerConfig consumerConfig = new ConsumerConfig(properties);
-        consumerConnector = Consumer.createJavaConsumerConnector(consumerConfig);
+        properties.put("group.id",nick);
+        consumerConfig = new ConsumerConfig(properties);
     }
     
     public Consumer_Main(String nick, String channel){
         Properties properties = new Properties();
         properties.put("zookeeper.connect","localhost:2181");
         properties.put("group.id",nick);
-        ConsumerConfig consumerConfig = new ConsumerConfig(properties);
+        consumerConfig = new ConsumerConfig(properties);
         consumerConnector = Consumer.createJavaConsumerConnector(consumerConfig);
-        TOPIC = channel;
+        this.TOPIC = channel;
+    }
+    
+    public void setChannel(String channel)
+    {
+        consumerConnector = Consumer.createJavaConsumerConnector(consumerConfig);
+        this.TOPIC = channel;
     }
 
     @Override
@@ -70,5 +83,9 @@ public class Consumer_Main extends  Thread{
             payload.get(bytes);
             System.out.println(new String(bytes, "UTF-8"));
         }
+    }
+    
+    public void shutdown() {
+        consumerConnector.shutdown();
     }
 }
